@@ -2,11 +2,15 @@
     <div class="homeBox">
         <router-view></router-view>
         <footer class="tabBar">
-            <div class="active"><i class="iconfont icon-msnui-home-inverse"></i>首页</div>
-            <div><i class="iconfont icon-xingxing"></i>许愿</div>
-            <div><i class="iconfont icon-shuaxin"></i>刷新</div>
-            <div><i class="iconfont icon-liwu1"></i>活动</div>
-            <div><i class="iconfont icon-gaiicon-"></i>我的</div>
+            <div :class="active==1?'active':''" @click="toRouter(1)"><i class="iconfont icon-msnui-home-inverse"></i>首页</div>
+            <div :class="active==2?'active':''"
+                 @click="toRouter(2)"><i class="iconfont icon-xingxing"></i>许愿</div>
+            <div :class="active==3?'active':''"
+                 @click="toRouter(3)"><i class="iconfont icon-shuaxin"></i>刷新</div>
+            <div :class="active==4?'active':''"
+                 @click="toRouter(4)"><i class="iconfont icon-liwu1"></i>活动</div>
+            <div :class="active==5?'active':''"
+                 @click="toRouter(5)"><i class="iconfont icon-gaiicon-"></i>我的</div>
         </footer>
     </div>
 </template>

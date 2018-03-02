@@ -22,11 +22,11 @@ export default [
         path: '/',
         name: 'home',
         component: home,
+      },{
+        path: '/wishing',
+        name: 'wishing',
+        component: wishing
       }
     ]
-  },{
-    path: '/wishing',
-    name: 'wishing',
-    component: wishing
   }
 ]

@@ -1,8 +1,8 @@
 <template>
     <div class="Box">
         <header>LOGO</header>
-        <img class="preImg" src="../../assets/preImg.png" alt="">
-        <img class="preImg" src="../../assets/preImg2.png" alt="">
+        <img @click="toWait()" class="preImg" src="../../assets/preImg.png" alt="">
+        <img @click="toWait()" class="preImg" src="../../assets/preImg2.png" alt="">
     </div>
 </template>
 <script>
