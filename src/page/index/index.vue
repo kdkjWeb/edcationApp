@@ -7,14 +7,14 @@
           <input type="text" maxlength="11" placeholder="请输入手机号" v-model="lgPhone">
         </div>
       </div>
-      <div class="row">
-        <i class="iconfont icon-yanzhengma"></i>
-        <div class="input">
-          <input class="code" type="text" maxlength="6" placeholder="验证码" v-model="regCode">
-          <button class="codeBtn"
-                  :disabled="disabled" @click="validateCode">{{validateLabel}}</button>
-        </div>
-      </div>
+      <!--<div class="row">-->
+        <!--<i class="iconfont icon-yanzhengma"></i>-->
+        <!--<div class="input">-->
+          <!--<input class="code" type="text" maxlength="6" placeholder="验证码" v-model="regCode">-->
+          <!--<button class="codeBtn"-->
+                  <!--:disabled="disabled" @click="validateCode">{{validateLabel}}</button>-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="row">
         <i class="iconfont icon-mima"></i>
         <div class="input">

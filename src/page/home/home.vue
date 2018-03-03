@@ -182,6 +182,18 @@
     box-shadow: 0 4px 5px 0 #5b341b inset;
     position:relative;
   }
+  .yes:after {
+    content: "";
+    display: block;
+    width:100%;
+    height:100%;
+    border-radius: 20px;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:10;
+    background-color: rgba(0,0,0,.5);
+  }
   .pru img{
     position:absolute;
     width:70%;
