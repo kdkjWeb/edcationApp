@@ -18,8 +18,8 @@
           </div>
         </div>
         <div class="rewBox">
-          <div class="rewList" v-for="(item,index) in rewardList">
-            <div class="pru" :class="index==4?'org':''">
+          <div class="rewList" v-for="(item,index) in rewardList" :key="index">
+            <div class="pru" :class="[index==4?'org':'',index==circleId?'yes':'']" @click="rewardBtn(index)">
               <img :src="`../../../static/reward${index}.png`" alt="">
             </div>
           </div>
@@ -29,26 +29,11 @@
         <img src="../../assets/rewardList.png" alt="">
         <div class="rewNames">
           <div class="rewNamesSc">
-            <div class="rewNameB">
-              <p>
-                <span>1832819****</span>
+            <div class="rewNameB" :class="scroll">
+              <p v-for="(item,index) in rewardName" :key="index">
+                <span>{{item.phone}}</span>
                 <span>抽中</span>
-                <span>毛巾</span>
-              </p>
-              <p>
-                <span>1832819****</span>
-                <span>抽中</span>
-                <span>毛巾毛巾毛巾</span>
-              </p>
-              <p>
-                <span>1832819****</span>
-                <span>抽中</span>
-                <span>毛巾毛巾毛巾</span>
-              </p>
-              <p>
-                <span>1832819****</span>
-                <span>抽中</span>
-                <span>毛巾毛巾毛巾</span>
+                <span>{{item.name}}</span>
               </p>
             </div>
           </div>
@@ -244,8 +229,51 @@
     flex: 3;
     text-align: right;
   }
-
-
+  .rewNameB {
+    margin-top:0;
+  }
+  .a {
+    animation: a 8s linear infinite;
+  }
+  .b {
+    animation: b 8s linear infinite;
+  }
+  .c {
+    animation: c 8s linear infinite;
+  }
+  @keyframes  a{
+    0%{
+      margin-top:0;
+    }
+    100%{
+      margin-top:-20px;
+    }
+  }
+  @keyframes  b{
+    0%{
+      margin-top:0;
+    }
+    50%{
+      margin-top:-20px;
+    }
+    100%{
+      margin-top:-40px;
+    }
+  }
+  @keyframes  c{
+    0%{
+      margin-top:0;
+    }
+    30%{
+      margin-top:-20px;
+    }
+    60%{
+      margin-top:-40px;
+    }
+    100%{
+      margin-top:-60px;
+    }
+  }
   .wish {
     width:100%;
     margin-bottom:20px;

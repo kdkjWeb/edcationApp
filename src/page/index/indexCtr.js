@@ -10,15 +10,16 @@ export default {
       lgPhone:"",
       lgPwd:"",
       regPwd:'',
-      regCode:'',
-      circle:3,
-      circleId:0
+      regCode:''
     }
   },
   methods:{
     change(){
       this.logReg = !this.logReg;
     },
+    /**
+     * 获取验证码
+     */
     validateCode() {
       let time = 59;
       let that = this;
@@ -36,6 +37,10 @@ export default {
         that.disabled = true;
       },1000)
     },
+    /**
+     * 登录
+     * @returns {boolean}
+     */
     login(){
       var phone = this.lgPhone;
       var pwd = this.lgPwd;
@@ -80,6 +85,10 @@ export default {
 
 
     },
+    /**
+     * 注册
+     * @returns {boolean}
+     */
     register(){
       var phone = this.lgPhone;
       // var code = this.regCode;
