@@ -8,11 +8,11 @@ export default {
         wishingTxt: '',
         wishingCon: ''
       },
-     // arrWishing: ['a','b','c','a','b','c','a','b','c','a','b','c','a','b','c','a','b','c','a','b','c','a','b','c','a','b','c','a','b','c'],
      arrWishing: [], 
      arrPositon: [],
      ret: [],
-     audio: '../../../static/a.mp3'
+     audio: '../../../static/a.mp3',
+     current: 1
     }
   },
   methods:{
@@ -21,29 +21,63 @@ export default {
         
         if(!this.wishing.wishingTxt||!this.wishing.wishingCon){
             this.$mint.Toast({
-              message: '信息填入不完整！',
+              message: '还没有填入愿望哦！',
               position: 'center',
               duration: 1000
           });
             return;
         }
-        console.log(this.wishing.wishingTxt,this.wishing.wishingCon)
+        if(this.arrWishing.length>=30){
+            this.$mint.Toast({
+              message: '此树许愿已满，请点击下一棵！',
+              position: 'center',
+              duration: 500
+          });
+          return;
+        }
         this.$p({
           url:'/wishingTree/addWishes',
           params:{
             type: 1,
-            userid: 1,
+            userid: this.$common.getStorage('token'),
             content: this.wishing.wishingCon,
             realname: this.wishing.wishingTxt
           },
           callback: (res)=>{
-            console.log(res)
+            if(res.code == 0){
+              this.$mint.Toast({
+                message: '许愿成功',
+                position: 'center',
+                duration: 500
+            });
+            this.getArrWishing(this.current)
+            this.wishing.wishingCon = '';
+            this.wishing.wishingTxt = '';
+           }else{
+            this.$mint.Toast({
+                message: '网络异常，请稍后再试！',
+                position: 'center',
+                duration: 500
+            });
+           }
           }
       })
       },
       //点击下一棵按钮
       next(){
-        console.log('下一棵树')
+        this.wishing.wishingCon = '';
+        this.wishing.wishingTxt = '';
+        if(this.arrWishing.length>=30){
+          this.current++;
+          console.log(this.current)
+          this.getArrWishing(this.current)
+        }else{
+          this.$mint.Toast({
+            message: '这颗许愿树还可以许愿哦！',
+            position: 'center',
+            duration: 500
+        });
+        }
       },
       //点击每一个愿望查看
       seeWish(item){
@@ -58,6 +92,7 @@ export default {
       random(){
         //let leaf = document.getElementsByClassName('leaf');
         let leaf = this.$refs.wish.getElementsByClassName('leaf');
+        console.log(leaf.length)
         let Width = document.body.clientWidth-30;
         let Height = Width;
         for(let i=0; i<leaf.length; i++){
@@ -69,14 +104,10 @@ export default {
              });
              
               this.getPosition();
-              //console.log(this.ret)
-              for(let i=0; i<this.ret.length; i++){
-                leaf[i].style.top = this.ret[i].top + 'px'
-                leaf[i].style.left = this.ret[i].left + 'px'
-              }
-             //console.log(this.arrPositon)
-             //leaf[i].style.top = top + 'px'
-             //leaf[i].style.left = left + 'px'
+                 for(let i=0; i<this.ret.length; i++){
+                   leaf[i].style.top = this.ret[i].top + 'px'
+                   leaf[i].style.left = this.ret[i].left + 'px'
+                 }
         }
       },
       //生成指定范围内的不重复随机数
@@ -100,12 +131,12 @@ export default {
          return this.ret;
         },
         //请求后台返回的数据
-        getArrWishing(){
+        getArrWishing(current){
           this.$p({
             url:'/wishingTree/getLeaves',
             params:{
-              pageSize: 30,
-              current: 1,
+              pageSize: 50,
+              current: current,
               orderby:"createtime",
             },
             callback:(res)=>{
@@ -114,7 +145,8 @@ export default {
                   this.arrWishing = res.data.list;
                   this.$nextTick(()=>{
                     this.random()
-                  })
+                  })  
+                             
                }else{
                 this.$mint.Toast({
                   message: '网络异常，请稍后再试！',
@@ -130,7 +162,7 @@ export default {
       
     },
     mounted(){
-      this.getArrWishing()
+      this.getArrWishing(this.current)
       this.autoPlay()
     }
 }
