@@ -8,9 +8,11 @@ export default {
         wishingTxt: '',
         wishingCon: ''
       },
-      arrWishing: ['a','b','c','a','b','c','a','b','c','a','b','c','a','b','c','a','b','c','a','b','c','a','b','c','a','b','c','a','b','c'],
-      arrPositon: [],
-      ret: []
+     // arrWishing: ['a','b','c','a','b','c','a','b','c','a','b','c','a','b','c','a','b','c','a','b','c','a','b','c','a','b','c','a','b','c'],
+     arrWishing: [], 
+     arrPositon: [],
+     ret: [],
+     audio: '../../../static/a.mp3'
     }
   },
   methods:{
@@ -18,30 +20,56 @@ export default {
       send(){
         
         if(!this.wishing.wishingTxt||!this.wishing.wishingCon){
-            console.log('信息填入不全')
+            this.$mint.Toast({
+              message: '信息填入不完整！',
+              position: 'center',
+              duration: 1000
+          });
             return;
         }
         console.log(this.wishing.wishingTxt,this.wishing.wishingCon)
+        this.$p({
+          url:'/wishingTree/addWishes',
+          params:{
+            type: 1,
+            userid: 1,
+            content: this.wishing.wishingCon,
+            realname: this.wishing.wishingTxt
+          },
+          callback: (res)=>{
+            console.log(res)
+          }
+      })
       },
       //点击下一棵按钮
       next(){
         console.log('下一棵树')
       },
+      //点击每一个愿望查看
+      seeWish(item){
+          console.log(item)
+      },
+      //自动播放音乐
+      autoPlay(){
+          let audio = document.getElementsByClassName('audio')[0];
+          audio.play();
+      },
       //随机生成位置
       random(){
-        let leaf = document.getElementsByClassName('leaf');
+        //let leaf = document.getElementsByClassName('leaf');
+        let leaf = this.$refs.wish.getElementsByClassName('leaf');
         let Width = document.body.clientWidth-30;
         let Height = Width;
         for(let i=0; i<leaf.length; i++){
              let left = Math.random()*Width;
-             let top = this.getRandom(65,Height);
+             let top = this.getRandom(65,Height) + 60;
              this.arrPositon.push({
                left: left,
                top: top
              });
              
               this.getPosition();
-              console.log(this.ret)
+              //console.log(this.ret)
               for(let i=0; i<this.ret.length; i++){
                 leaf[i].style.top = this.ret[i].top + 'px'
                 leaf[i].style.left = this.ret[i].left + 'px'
@@ -70,12 +98,39 @@ export default {
             }
         }
          return this.ret;
+        },
+        //请求后台返回的数据
+        getArrWishing(){
+          this.$p({
+            url:'/wishingTree/getLeaves',
+            params:{
+              pageSize: 30,
+              current: 1,
+              orderby:"createtime",
+            },
+            callback:(res)=>{
+              console.log(res.data.list)
+               if(res.code == 0){
+                  this.arrWishing = res.data.list;
+                  this.$nextTick(()=>{
+                    this.random()
+                  })
+               }else{
+                this.$mint.Toast({
+                  message: '网络异常，请稍后再试！',
+                  position: 'center',
+                  duration: 500
+              });
+               }
+            }
+          })
         }
     },
     created(){
-        
+      
     },
     mounted(){
-      this.random()
+      this.getArrWishing()
+      this.autoPlay()
     }
 }

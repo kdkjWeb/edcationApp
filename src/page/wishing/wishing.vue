@@ -1,8 +1,15 @@
 <template>
   <div id="wishing">
+    <!-- 头部 -->
+    <header>
+      LOGO
+      <span class="share iconfont icon-icon_share"></span>
+    </header>
+    
     <!-- 许愿树 -->
-    <div class="wishing">
-      <span class="leaf" v-for="(item,index) in arrWishing" :key="index"></span>
+    <div class="wishing" ref="wish">
+      <div class="music iconfont icon-bofang"></div>
+      <span class="leaf" v-for="(item,index) in arrWishing" :key="index" @click="seeWish(item)"></span>
     </div>
 
     <!-- 许愿人及许愿内容 -->
@@ -19,12 +26,39 @@
           <span class="iconfont icon-fasong"></span>发送</div>
         <div @click="next">下一棵树</div>
     </div>
+    <!-- 音乐连接 -->
+    <audio :src="audio" class="audio"/>
   </div>
 </template>
 <script>
     export default require('./wishingCtr.js');
 </script>
 <style scoped>
+  
+  header {
+      position: relative;
+      width:100%;
+      height:60px;
+      background-color: #323232;
+      color:white;
+      display: flex;
+      align-items:flex-end;
+      box-sizing: border-box;
+      padding-left:20px;
+      padding-bottom:10px;
+      font-weight: bold;
+      font-size: 26px;
+  }
+  .share{
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    color: #000;
+  }
   #wishing{
     background: #e9e9e9;
     position: relative;
@@ -71,6 +105,7 @@
     display: -webkit-flex;
     justify-content: space-between;
     margin-top: 15px;
+    padding-bottom: 15px;
   }
   .btn div{
     width: 47%;
@@ -97,6 +132,15 @@
     display: inline-block;
     background-image: url('../../assets/wishPkg.png');
     background-size: cover;
+  }
+
+  .music{
+    position: absolute;
+    right: 20px;
+    top: 70px;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
   }
 </style>
 
