@@ -19,7 +19,7 @@ export default [
     component: tabBar,
     children:[
       {
-        path: '/',
+        path: '/tabBar',
         name: 'home',
         component: home,
       },{

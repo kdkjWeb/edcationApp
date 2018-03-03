@@ -3,7 +3,37 @@
  */
 export default {
     data(){
-        return {}
+        return {
+          rewardList:[
+            {
+              id:1,
+            },
+            {
+              id:1,
+            },
+            {
+              id:1,
+            },
+            {
+              id:1,
+            },
+            {
+              id:1,
+            },
+            {
+              id:1,
+            },
+            {
+              id:1,
+            },
+            {
+              id:1,
+            },
+            {
+              id:1,
+            }
+          ]
+        }
     },
     methods:{
         toWait(){
@@ -12,6 +42,11 @@ export default {
                 position: 'center',
                 duration: 1500
             });
-        }
+        },
+      toRouter(){
+        this.$router.push({
+          path:'/wishing'
+        });
+      }
     }
 }
