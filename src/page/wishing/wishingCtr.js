@@ -4,6 +4,7 @@
 export default {
   data(){
     return {
+      flag: true, //判断音乐是否播放
       wishing:{
         wishingTxt: '',
         wishingCon: ''
@@ -12,7 +13,13 @@ export default {
      arrPositon: [],
      ret: [],
      audio: '../../../static/a.mp3',
-     current: 1
+     current: 1,
+     ClientHeight: 0,
+     isShow: false,
+     userWishing: {
+       name: '',
+       text: ''
+     }
     }
   },
   methods:{
@@ -82,62 +89,65 @@ export default {
       //点击每一个愿望查看
       seeWish(item){
           console.log(item)
+          Object.assign(this.userWishing,{
+            name: item.realname,
+            text: item.content
+          })
+          this.isShow = true;
+          this.stop()
+      },
+      //关闭查看愿望页面
+      wishingClose(){
+        console.log(1)
+          this.isShow = false;
+          this.move();
       },
       //自动播放音乐
       autoPlay(){
           let audio = document.getElementsByClassName('audio')[0];
           audio.play();
       },
+      //控制音乐播放
+      ControlMusic(){
+       if(this.flag){
+          let audio = document.getElementsByClassName('audio')[0];
+          audio.pause();
+          this.flag = !this.flag
+        }else{
+          this.autoPlay();
+          this.flag = !this.flag
+        }
+      },
       //随机生成位置
       random(){
         //let leaf = document.getElementsByClassName('leaf');
         let leaf = this.$refs.wish.getElementsByClassName('leaf');
-        console.log(leaf.length)
+        // console.log(leaf.length)
         let Width = document.body.clientWidth-30;
         let Height = Width;
         for(let i=0; i<leaf.length; i++){
              let left = Math.random()*Width;
              let top = this.getRandom(65,Height) + 60;
-             this.arrPositon.push({
-               left: left,
-               top: top
-             });
-             
-              this.getPosition();
-                 for(let i=0; i<this.ret.length; i++){
-                   leaf[i].style.top = this.ret[i].top + 'px'
-                   leaf[i].style.left = this.ret[i].left + 'px'
-                 }
+             leaf[i].style.top = top + 'px'
+              leaf[i].style.left = left + 'px'
         }
       },
       //生成指定范围内的不重复随机数
       
-      //生成指定范围内的随机数
+      //生成指定范围内的不重复随机数
       getRandom(start, end) {
           let length = end - start;
           let num = Math.random() * (length) + start;
           return num;
         },
-      //遍历随机位置数组，防止位置重叠
-       getPosition(){
-        // var ret = [];
-        for (var i = 0, j = this.arrPositon.length; i < j; i++) {
-            if (this.ret.indexOf(this.arrPositon[i]) === -1) {
-                this.ret.push(this.arrPositon[i]);
-            }else{
-              this.getRandom()
-            }
-        }
-         return this.ret;
-        },
         //请求后台返回的数据
-        getArrWishing(current){
+      getArrWishing(current){
           this.$p({
             url:'/wishingTree/getLeaves',
             params:{
-              pageSize: 50,
+              pageSize: 30,
               current: current,
-              orderby:"createtime",
+              orderBy: 'createtime',
             },
             callback:(res)=>{
               console.log(res.data.list)
@@ -156,13 +166,40 @@ export default {
                }
             }
           })
-        }
+        },
+        //禁止滑动
+      stop(){
+        document.body.style.overflow='hidden';
+        document.addEventListener("touchmove",function(e){e.preventDefault()},false);//禁止页面滑动
+      },
+
+      //取消滑动限制
+      move(){
+        document.body.style.overflow='';//出现滚动条
+        document.removeEventListener("touchmove",function(e){e.preventDefault()},false);
+      },
+      //分享
+      share(){
+        this.$mint.Toast({
+          message: '功能正在开发，敬请期待！',
+          position: 'center',
+          duration: 1000
+      });
+      }
+
     },
     created(){
-      
+        this.ClientHeight = window.innerHeight + 'px'
+        console.log(this.ClientHeight)
     },
     mounted(){
       this.getArrWishing(this.current)
       this.autoPlay()
+
+      //当屏幕改变时的高度
+      //屏幕发生改变时 
+		window.addEventListener('resize',()=>{
+			this.ClientHeight = window.innerHeight + 'px'
+		})
     }
 }
