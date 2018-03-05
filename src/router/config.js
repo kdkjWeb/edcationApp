@@ -6,7 +6,7 @@ import index from '@/page/index/index'
 import tabBar from '@/page/tabBar/tabBar'
 import home from '@/page/home/home'
 import wishing from '@/page/wishing/wishing'
-
+import mine from '@/page/mine/mine'
 
 export default [
   {
@@ -26,6 +26,10 @@ export default [
         path: '/wishing',
         name: 'wishing',
         component: wishing
+      },{
+        path: '/mine',
+        name: 'mine',
+        component: mine
       }
     ]
   }

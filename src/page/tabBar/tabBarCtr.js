@@ -26,7 +26,7 @@ export default {
           break;
         case 5:
           this.$router.push({
-            path: '/'
+            path: '/mine'
           });
           break;
         default:
