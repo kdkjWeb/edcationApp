@@ -2,10 +2,10 @@
   <div id="wishing">
     <!-- 头部 -->
     <header>
-      LOGO
+      <img src="../../assets/logo.png" alt="">
       <span class="share iconfont icon-icon_share" @click="share"></span>
     </header>
-    
+
     <!-- 许愿树 -->
     <div class="wishing" ref="wish">
       <div class="music iconfont" :class="[flag?'icon-zanting1':'icon-bofang']" @click="ControlMusic"></div>
@@ -28,8 +28,8 @@
     </div>
     <!-- 音乐连接 -->
     <audio :src="audio" class="audio"/>
-   
-    <!-- 遮罩层 --> 
+
+    <!-- 遮罩层 -->
     <div class="layOut" :style="{height: ClientHeight}" v-show="isShow">
         <!-- 查看每个愿望的内容 -->
         <div class="wishing_con">
@@ -45,7 +45,7 @@
     export default require('./wishingCtr.js');
 </script>
 <style scoped>
-  
+
   header {
       position: relative;
       width:100%;
@@ -59,6 +59,9 @@
       padding-bottom:10px;
       font-weight: bold;
       font-size: 26px;
+  }
+  header img {
+    height:30px;
   }
   .share{
     position: absolute;

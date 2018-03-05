@@ -4,7 +4,7 @@
       <div class="row">
         <i class="iconfont icon-shouji"></i>
         <div class="input">
-          <input type="text" maxlength="11" placeholder="请输入手机号" v-model="lgPhone">
+          <input type="text" maxlength="11" placeholder="请输入用户名" v-model="lgPhone">
         </div>
       </div>
       <!--<div class="row">-->
@@ -28,7 +28,7 @@
       <div class="row">
         <i class="iconfont icon-shouji"></i>
         <div class="input">
-          <input type="text" maxlength="11" placeholder="请输入手机号" v-model="lgPhone">
+          <input type="text" maxlength="11" placeholder="请输入用户名" v-model="lgPhone">
         </div>
       </div>
       <div class="row">

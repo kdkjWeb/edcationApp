@@ -44,12 +44,12 @@ export default {
     login(){
       var phone = this.lgPhone;
       var pwd = this.lgPwd;
-      var reg = /^[1][3,4,5,7,8][0-9]{9}$/;
-      // var regPwd = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$/
-      var regPwd = /^\w{6,12}$/
+      // var reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+      var reg = /^\w{6,12}$/;
+      var regPwd = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$/
       if(!reg.test(phone)) {
         this.$mint.Toast({
-          message: '请输入正确的手机号',
+          message: '请输入6-12位字符组成的名称',
           position: 'bottom',
           duration: 1500
         });
@@ -57,7 +57,7 @@ export default {
       }
       if(!regPwd.test(pwd)) {
         this.$mint.Toast({
-          message: '请输入6-12位字符组成的密码',
+          message: '请输入6-12位数字和字母组成的密码',
           position: 'bottom',
           duration: 1500
         });
@@ -94,12 +94,12 @@ export default {
       var phone = this.lgPhone;
       // var code = this.regCode;
       var pwd = this.regPwd;
-      var reg = /^[1][3,4,5,7,8][0-9]{9}$/;
-      // var regPwd = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$/
-      var regPwd = /^\w{6,12}$/
+      // var reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+      var reg = /^\w{6,12}$/;
+      var regPwd = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$/
       if(!reg.test(phone)) {
         this.$mint.Toast({
-          message: '请输入正确的手机号',
+          message: '请输入6-12位字符组成的名称',
           position: 'bottom',
           duration: 1500
         });
@@ -115,7 +115,7 @@ export default {
       // }
       if(!regPwd.test(pwd)) {
         this.$mint.Toast({
-          message: '请输入6-12位字符组成的密码',
+          message: '请输入6-12位数字和字母组成的密码',
           position: 'bottom',
           duration: 1500
         });
