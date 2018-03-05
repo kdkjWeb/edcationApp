@@ -29,7 +29,7 @@
         <img src="../../assets/rewardList.png" alt="">
         <div class="rewNames">
           <div class="rewNamesSc">
-            <div class="rewNameB" :class="scroll">
+            <div class="rewNameB" ref="rewNameB">
               <p v-for="(item,index) in rewardName" :key="index">
                 <span>{{item.phone}}</span>
                 <span>抽中</span>
@@ -231,48 +231,7 @@
   }
   .rewNameB {
     margin-top:0;
-  }
-  .a {
-    animation: a 8s linear infinite;
-  }
-  .b {
-    animation: b 8s linear infinite;
-  }
-  .c {
-    animation: c 8s linear infinite;
-  }
-  @keyframes  a{
-    0%{
-      margin-top:0;
-    }
-    100%{
-      margin-top:-20px;
-    }
-  }
-  @keyframes  b{
-    0%{
-      margin-top:0;
-    }
-    50%{
-      margin-top:-20px;
-    }
-    100%{
-      margin-top:-40px;
-    }
-  }
-  @keyframes  c{
-    0%{
-      margin-top:0;
-    }
-    30%{
-      margin-top:-20px;
-    }
-    60%{
-      margin-top:-40px;
-    }
-    100%{
-      margin-top:-60px;
-    }
+    transition: all 2s linear;
   }
   .wish {
     width:100%;

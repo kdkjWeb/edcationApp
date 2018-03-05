@@ -4,13 +4,13 @@
 export default {
     data(){
         return {
-          circle: 3,
+          circle: 2,
           circleId: null,
           rewardId: null,
           giftname: "",
-          rewardList: [],
+          rewardList:[],
           rewardName: [],
-          scroll:null,
+          btnFalse:true
         }
     },
     methods:{
@@ -18,11 +18,15 @@ export default {
        * 奖品按钮
        */
       rewardBtn(index){
-        this.circle = 3;
+        this.circle = 2;
         if(index !=4) {
           return false;
         }
-        this.getRandomNum();
+        if(this.btnFalse) {
+          this.btnFalse = false;
+          this.getRandomNum();
+        }
+
       },
       getRandomNum(){
         this.$g({
@@ -49,7 +53,7 @@ export default {
           case "靠背套装":
             return 0;
             break;
-          case "集线器":
+          case "绕线器":
             return 1;
             break;
           case "零钱包":
@@ -58,13 +62,13 @@ export default {
           case "洗衣液":
             return 7;
             break;
-          case "工艺香皂":
+          case "手机支架":
             return 3;
             break;
           case "毛巾":
             return 6;
             break;
-          case "餐具套装":
+          case "餐具套盒":
             return 4;
             break;
           case "":
@@ -82,6 +86,7 @@ export default {
               stopIndex--;
               if(stopIndex <=0) {
                 clearInterval(circleInt);
+                this.btnFalse = true;
                 this.remberReward(rewardId);
                 return false;
               }
@@ -112,6 +117,12 @@ export default {
       remberReward(rewardId){
         if(rewardId==null) {
           rewardId = '';
+          // this.$mint.Toast({
+          //   message: '很遗憾，您没有中奖！',
+          //   position: 'center',
+          //   duration: 1500
+          // });
+          // return false;
         }
         this.$p({
           url: 'Prizes/insertWinner',
@@ -120,7 +131,11 @@ export default {
               prize:rewardId
           },
           callback: (res)=> {
-            console.log(res)
+            this.$mint.Toast({
+              message: '恭喜你中奖了',
+              position: 'center',
+              duration: 1500
+            });
           }
         })
       },
@@ -142,11 +157,39 @@ export default {
         url:"Gift/selectGift",
         params:{},
         callback:(res)=>{
-          this.rewardList = JSON.parse(JSON.stringify(res.data.list));
+          var arr = JSON.parse(JSON.stringify(res.data.list));
+          var arrNew = [];
+          arr.forEach(function(e,index) {
+            switch (e.giftname) {
+              case "靠背套装":
+                arrNew.splice(0,0,e);
+                break;
+              case "绕线器":
+                arrNew.splice(1,0,e);
+                break;
+              case "零钱包":
+                arrNew.splice(2,0,e);
+                break;
+              case "洗衣液":
+                arrNew.splice(3,0,e);
+                break;
+              case "手机支架":
+                arrNew.splice(4,0,e);
+                break;
+              case "毛巾":
+                arrNew.splice(5,0,e);
+                break;
+              case "餐具套盒":
+                arrNew.splice(6,0,e);
+                break;
+            }
+          });
           var btn = {msg:"我是按钮"};
           var thank = {id:null,msg:"我是谢谢参与"}
-          this.rewardList.splice(4,0,btn);
-          this.rewardList.splice(7,0,thank)
+          arrNew.splice(4,0,btn);
+          arrNew.splice(7,0,thank);
+          console.log(arrNew);
+          this.rewardList = JSON.parse(JSON.stringify(arrNew));
           console.log(this.rewardList);
         }
       });
@@ -164,15 +207,24 @@ export default {
           this.rewardName = array;
           console.log(array);
           var arr = Object.keys(res.data);
-          if(arr.length<=2) {
-            this.scroll = '';
-          }else if(arr.length<=4) {
-            this.scroll = "a";
-          }else if(arr.length<=6) {
-            this.scroll = "b";
-          }else {
-            this.scroll = "c";
-          }
+          var dom,t,h;
+          this.$nextTick(() => {
+             dom = this.$refs.rewNameB;
+            h = parseInt(dom.offsetHeight);
+            t = dom.style.marginTop==""?0:parseInt(dom.style.marginTop);
+            setInterval(()=>{
+              if(h >40&& t > -(h-80)){
+                t = dom.style.marginTop==""?0:parseInt(dom.style.marginTop);
+                dom.style.marginTop = parseInt(t)-40+"px";
+                dom.style.transition = "all 2s linear";
+              }else if(h >40&&t <=-(h-80)) {
+                t=0;
+                dom.style.marginTop = 0;
+                dom.style.transition = "all 0s linear";
+              }
+            },2000)
+
+          })
         }
       })
     }
