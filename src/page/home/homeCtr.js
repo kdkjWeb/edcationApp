@@ -15,7 +15,7 @@ export default {
     },
     methods:{
       /**
-       * 奖品按钮
+       * 奖品按钮 circle 为旋转次数 btnFalse为是否可以重复点击
        */
       rewardBtn(index){
         this.circle = 2;
@@ -28,6 +28,9 @@ export default {
         }
 
       },
+      /**
+       * axios获取随机数奖品，rewardId  奖品id，giftname 礼物名称
+       */
       getRandomNum(){
         this.$g({
           url:"Gift/getRandomNum",
@@ -76,6 +79,11 @@ export default {
             break;
         }
       },
+      /**
+       * 旋转次数，以及停止的位置操作
+       * @param rewardId
+       * @param giftname
+       */
       circleFun(rewardId,giftname){
         var stopIndex = this.giftName(giftname)+1;
         this.circleId = 0;
@@ -136,6 +144,7 @@ export default {
               position: 'center',
               duration: 1500
             });
+            this.giftUser();
           }
         })
       },
@@ -150,82 +159,94 @@ export default {
         this.$router.push({
           path:'/wishing'
         });
+      },
+      /**
+       * 初始化获奖名单
+       */
+      giftUser(){
+        this.$g({
+          url:"Prizes/selectPrizesUsers",
+          params:{},
+          callback:(res)=>{
+            var array = [];
+            for (var i in res.data) {
+              var name = res.data[i]
+              var i = i.substring(0,7);
+              i+="****";
+              array.push({phone:i,name:name})
+            }
+            this.rewardName = array;
+            console.log(array);
+            var arr = Object.keys(res.data);
+            var dom,t,h;
+            this.$nextTick(() => {
+              dom = this.$refs.rewNameB;
+              h = parseInt(dom.offsetHeight);
+              t = dom.style.marginTop==""?0:parseInt(dom.style.marginTop);
+              setInterval(()=>{
+                if(h >40&& t > -(h-40)){
+                  t = dom.style.marginTop==""?0:parseInt(dom.style.marginTop);
+                  dom.style.marginTop = parseInt(t)-20+"px";
+                  dom.style.transition = "all 2s linear";
+                }else if(h >40&&t <=-(h-40)) {
+                  t=0;
+                  dom.style.marginTop = 0;
+                  dom.style.transition = "all 0s linear";
+                }
+              },2000)
+
+            })
+          }
+        })
+      },
+      /**
+       * 初始化礼品
+       */
+      getGift(){
+        this.$g({
+          url:"Gift/selectGift",
+          params:{},
+          callback:(res)=>{
+            var arr = JSON.parse(JSON.stringify(res.data.list));
+            var arrNew = [];
+            arr.forEach(function(e,index) {
+              switch (e.giftname) {
+                case "靠背套装":
+                  arrNew.splice(0,0,e);
+                  break;
+                case "绕线器":
+                  arrNew.splice(1,0,e);
+                  break;
+                case "零钱包":
+                  arrNew.splice(2,0,e);
+                  break;
+                case "洗衣液":
+                  arrNew.splice(3,0,e);
+                  break;
+                case "手机支架":
+                  arrNew.splice(4,0,e);
+                  break;
+                case "毛巾":
+                  arrNew.splice(5,0,e);
+                  break;
+                case "餐具套盒":
+                  arrNew.splice(6,0,e);
+                  break;
+              }
+            });
+            var btn = {msg:"我是按钮"};
+            var thank = {id:null,msg:"我是谢谢参与"}
+            arrNew.splice(4,0,btn);
+            arrNew.splice(7,0,thank);
+            console.log(arrNew);
+            this.rewardList = JSON.parse(JSON.stringify(arrNew));
+            console.log(this.rewardList);
+          }
+        });
       }
     },
     mounted(){
-      this.$g({
-        url:"Gift/selectGift",
-        params:{},
-        callback:(res)=>{
-          var arr = JSON.parse(JSON.stringify(res.data.list));
-          var arrNew = [];
-          arr.forEach(function(e,index) {
-            switch (e.giftname) {
-              case "靠背套装":
-                arrNew.splice(0,0,e);
-                break;
-              case "绕线器":
-                arrNew.splice(1,0,e);
-                break;
-              case "零钱包":
-                arrNew.splice(2,0,e);
-                break;
-              case "洗衣液":
-                arrNew.splice(3,0,e);
-                break;
-              case "手机支架":
-                arrNew.splice(4,0,e);
-                break;
-              case "毛巾":
-                arrNew.splice(5,0,e);
-                break;
-              case "餐具套盒":
-                arrNew.splice(6,0,e);
-                break;
-            }
-          });
-          var btn = {msg:"我是按钮"};
-          var thank = {id:null,msg:"我是谢谢参与"}
-          arrNew.splice(4,0,btn);
-          arrNew.splice(7,0,thank);
-          console.log(arrNew);
-          this.rewardList = JSON.parse(JSON.stringify(arrNew));
-          console.log(this.rewardList);
-        }
-      });
-      this.$g({
-        url:"Prizes/selectPrizesUsers",
-        params:{},
-        callback:(res)=>{
-          var array = [];
-          for (var i in res.data) {
-            var name = res.data[i]
-            var i = i.substring(0,7);
-            i+="****";
-            array.push({phone:i,name:name})
-          }
-          this.rewardName = array;
-          console.log(array);
-          var arr = Object.keys(res.data);
-          var dom,t,h;
-          this.$nextTick(() => {
-             dom = this.$refs.rewNameB;
-            h = parseInt(dom.offsetHeight);
-            t = dom.style.marginTop==""?0:parseInt(dom.style.marginTop);
-            setInterval(()=>{
-              if(h >40&& t > -(h-80)){
-                t = dom.style.marginTop==""?0:parseInt(dom.style.marginTop);
-                dom.style.marginTop = parseInt(t)-40+"px";
-                dom.style.transition = "all 2s linear";
-              }else if(h >40&&t <=-(h-80)) {
-                t=0;
-                dom.style.marginTop = 0;
-                dom.style.transition = "all 0s linear";
-              }
-            },2000)
-
-          })
-        }
-      })
+      this.getGift();
+      this.giftUser();
     }
 }
