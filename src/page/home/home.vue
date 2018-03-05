@@ -1,6 +1,6 @@
 <template>
   <div class="Box">
-    <header>LOGO</header>
+    <header><img src="../../assets/logo.png" alt=""></header>
     <img @click="toWait()" class="preImg" src="../../assets/preImg.png" alt="">
     <div class="reward">
       <img src="../../assets/rewardBg.png" alt="">
@@ -100,7 +100,9 @@
     font-weight: bold;
     font-size: 26px;
   }
-
+  header img {
+    height:30px;
+  }
   .preImg {
     width: 100%;
   }
