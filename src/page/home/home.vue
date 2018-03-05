@@ -20,7 +20,7 @@
         <div class="rewBox">
           <div class="rewList" v-for="(item,index) in rewardList" :key="index">
             <div class="pru" :class="[index==4?'org':'',index==circleId?'yes':'']" @click="rewardBtn(index)">
-              <img :src="`../../../static/reward${index}.png`" alt="">
+              <img :src="`static/reward${index}.png`" alt="">
             </div>
           </div>
         </div>

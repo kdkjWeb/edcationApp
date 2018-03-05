@@ -73,13 +73,13 @@ export default {
           this.$mint.Toast({
             message: '登录成功',
             position: 'bottom',
-            duration: 1500
+            duration: 500
           });
           setTimeout(()=>{
             this.$router.push({
               path:'/tabBar'
             });
-          },2000);
+          },500);
         }
       });
 
@@ -133,7 +133,7 @@ export default {
             });
             setTimeout(()=>{
               this.logReg = !this.logReg;
-            },2000);
+            },1500);
         }
       });
 

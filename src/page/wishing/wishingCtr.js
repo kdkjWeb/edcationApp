@@ -12,7 +12,7 @@ export default {
      arrWishing: [], 
      arrPositon: [],
      ret: [],
-     audio: '../../../static/a.mp3',
+     audio: 'static/a.mp3',
      current: 1,
      ClientHeight: 0,
      isShow: false,
@@ -199,7 +199,8 @@ export default {
       //当屏幕改变时的高度
       //屏幕发生改变时 
 		window.addEventListener('resize',()=>{
-			this.ClientHeight = window.innerHeight + 'px'
+      this.ClientHeight = window.innerHeight + 'px'
+      console.log(this.ClientHeight)
 		})
     }
 }

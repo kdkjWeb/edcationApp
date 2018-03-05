@@ -78,7 +78,7 @@
     width: 100%;
     padding-bottom: 144%;
     height: 0;
-    background: url('../../assets/wishing.png');
+    background-image: url('../../assets/wishing.png');
     background-size: contain;
   }
   .wishing_info{
@@ -165,7 +165,7 @@
 
   /* 遮罩层 */
   .layOut{
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     width: 100%;
