@@ -45,11 +45,11 @@ export default {
       var phone = this.lgPhone;
       var pwd = this.lgPwd;
       // var reg = /^[1][3,4,5,7,8][0-9]{9}$/;
-      var reg = /^\w{6,12}$/;
+      // var reg = /^\w{6,12}$/;
       var regPwd = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$/
-      if(!reg.test(phone)) {
+      if(phone=="") {
         this.$mint.Toast({
-          message: '请输入6-12位字符组成的名称',
+          message: '请输入名称',
           position: 'bottom',
           duration: 1500
         });
@@ -95,11 +95,11 @@ export default {
       // var code = this.regCode;
       var pwd = this.regPwd;
       // var reg = /^[1][3,4,5,7,8][0-9]{9}$/;
-      var reg = /^\w{6,12}$/;
+      // var reg = /^\w{6,12}$/;
       var regPwd = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$/
-      if(!reg.test(phone)) {
+      if(phone=="") {
         this.$mint.Toast({
-          message: '请输入6-12位字符组成的名称',
+          message: '请输入名称',
           position: 'bottom',
           duration: 1500
         });

@@ -34,14 +34,15 @@ export default {
           });
             return;
         }
-        if(this.arrWishing.length>=30){
-            this.$mint.Toast({
-              message: '此树许愿已满，请点击下一棵！',
-              position: 'center',
-              duration: 500
-          });
-          return;
-        }
+        // if(this.arrWishing.length>=30){
+        //     this.$mint.Toast({
+        //       message: '此树许愿已满，请点击下一棵！',
+        //       position: 'center',
+        //       duration: 500
+        //   });
+         // return;
+        //}
+        this.current = 1;
         this.$p({
           url:'/wishingTree/addWishes',
           params:{
@@ -74,7 +75,9 @@ export default {
       next(){
         this.wishing.wishingCon = '';
         this.wishing.wishingTxt = '';
-        if(this.arrWishing.length>=30){
+        this.current++;
+        this.getArrWishing(this.current)
+        /*if(this.arrWishing.length>=30){
           this.current++;
           console.log(this.current)
           this.getArrWishing(this.current)
@@ -84,7 +87,7 @@ export default {
             position: 'center',
             duration: 500
         });
-        }
+        }*/
       },
       //点击每一个愿望查看
       seeWish(item){
@@ -94,13 +97,13 @@ export default {
             text: item.content
           })
           this.isShow = true;
-          this.stop()
+          // this.stop()
       },
       //关闭查看愿望页面
       wishingClose(){
         console.log(1)
           this.isShow = false;
-          this.move();
+          //this.move();
       },
       //自动播放音乐
       autoPlay(){
@@ -124,12 +127,12 @@ export default {
         let leaf = this.$refs.wish.getElementsByClassName('leaf');
         // console.log(leaf.length)
         let Width = document.body.clientWidth-30;
-        let Height = Width;
+        let Height = Width*1.2;
         for(let i=0; i<leaf.length; i++){
              let left = Math.random()*Width;
-             let top = this.getRandom(65,Height) + 60;
+             let top = this.getRandom(55,Height) + 60;
              leaf[i].style.top = top + 'px'
-              leaf[i].style.left = left + 'px'
+             leaf[i].style.left = left + 'px'
         }
       },
       //生成指定范围内的不重复随机数
@@ -145,19 +148,28 @@ export default {
           this.$p({
             url:'/wishingTree/getLeaves',
             params:{
-              pageSize: 30,
+              pageSize: 80,
               current: current,
               orderBy: 'createtime',
             },
             callback:(res)=>{
               console.log(res.data.list)
+              if(res.msg == 502){
+                this.$mint.Toast({
+                    message: '没有下一棵树了！',
+                    position: 'center',
+                    duration: 500
+                });
+                return;
+               }
                if(res.code == 0){
                   this.arrWishing = res.data.list;
                   this.$nextTick(()=>{
                     this.random()
-                  })  
-                             
-               }else{
+                  })              
+               }
+               
+               else{
                 this.$mint.Toast({
                   message: '网络异常，请稍后再试！',
                   position: 'center',
