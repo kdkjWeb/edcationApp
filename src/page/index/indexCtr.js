@@ -78,7 +78,7 @@ export default {
           });
           setTimeout(()=>{
             this.$router.push({
-              path:'/tabBar'
+              path: '/home',
             });
           },500);
         }

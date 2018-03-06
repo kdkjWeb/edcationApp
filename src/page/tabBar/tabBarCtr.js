@@ -13,7 +13,7 @@ export default {
       switch (index) {
         case 1:
           this.$router.push({
-            path: '/tabBar'
+            path: '/home'
           });
           break;
         case 2:

@@ -4,6 +4,8 @@
 import Vue from 'vue'
 import Axios from 'axios';
 var axiosConfig = Axios.create({
+  //baseURL: 'http://122.114.91.41:8886/',
+  //baseURL: 'http://127.0.0.1:8886/',
   //baseURL: 'http://www.kaidikeji.com:8886/',
   // baseURL: 'http://192.168.20.112:8080/', //田涛银
   //baseURL: 'http://192.168.20.8:8886/',    //林晨旭

@@ -11,17 +11,15 @@ import mine from '@/page/mine/mine'
 export default [
   {
     path: '/',
-    name: 'index',
-    component:index
-  },{
-    path: '/tabBar',
     name: 'tabBar',
     component: tabBar,
+    redirect: '/home',
     children:[
       {
-        path: '/tabBar',
+        path: '/home',
         name: 'home',
         component: home,
+    
       },{
         path: '/wishing',
         name: 'wishing',
@@ -32,5 +30,10 @@ export default [
         component: mine
       }
     ]
+  },
+  {
+    path: '/index',
+    name: 'index',
+    component:index,    
   }
 ]

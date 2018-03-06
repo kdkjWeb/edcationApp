@@ -34,14 +34,22 @@ export default {
           });
             return;
         }
-        // if(this.arrWishing.length>=30){
-        //     this.$mint.Toast({
-        //       message: '此树许愿已满，请点击下一棵！',
-        //       position: 'center',
-        //       duration: 500
-        //   });
-         // return;
-        //}
+
+        //判断用户是否已经登录
+        if(!this.$common.getStorage('token')){
+          this.$mint.Toast({
+            message: '您还没有登录，请登录！',
+            position: 'center',
+            duration: 1500
+          });
+          setTimeout(()=>{
+            this.$router.push({
+              path:'/index',
+            })
+          },2000)
+          return;
+        }
+
         this.current = 1;
         this.$p({
           url:'/wishingTree/addWishes',

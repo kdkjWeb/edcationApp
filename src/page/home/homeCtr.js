@@ -22,9 +22,24 @@ export default {
         if(index !=4) {
           return false;
         }
+        //判断用户是否已经登录
+        if(!this.$common.getStorage('token')){
+            this.$mint.Toast({
+              message: '您还没有登录，请登录！',
+              position: 'center',
+              duration: 1500
+            });
+            setTimeout(()=>{
+              this.$router.push({
+                path:'/index',
+              })
+            },2000)
+            return;
+          }
         if(this.btnFalse) {
           this.btnFalse = false;
           this.getRandomNum();
+         
         }
 
       },
